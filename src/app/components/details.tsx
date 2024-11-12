@@ -1,3 +1,5 @@
+import Section from "./section";
+
 const info = [
   {
     title: "AI precision",
@@ -16,17 +18,27 @@ const info = [
 ];
 const Details = () => {
   return (
-    <section>
-      <h3>Our process</h3>
-      {info.map((item, index) => (
-        <div key={index}>
-          <h4>
-            {index + 1}.{item.title}
-          </h4>
-          <p>{item.description}</p>
-        </div>
-      ))}
-    </section>
+    <Section className="flex flex-col gap-6 py-20">
+      <h3 className="text-dark border border-dark rounded-[32px] p-6 md:p-8 text-[40px] md:text-[64px] font-bold uppercase">
+        Our process
+      </h3>
+      <div className="flex flex-col px-6">
+        {info.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col gap-2 border-b border-dark pb-4 mb-4"
+          >
+            <h4 className="uppercase text-dark text-[20px] md:text-[40px] font-bold">
+              <span className="mr-2 w-[35px]">{index + 1}.</span>
+              {item.title}
+            </h4>
+            <p className="pl-2 ml-[16px] md:ml-[35px] uppercase text-dark font-medium text-[16px] md:text-[25px]">
+              {item.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </Section>
   );
 };
 

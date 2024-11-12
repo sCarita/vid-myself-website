@@ -6,7 +6,7 @@ import Pricing from "./components/pricing";
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="flex flex-col gap-6">
       <Hero />
       <Examples />
       <CTA />
