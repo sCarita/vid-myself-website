@@ -6,11 +6,26 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  phone: z.string().min(1, "Phone number is required"),
+  firstName: z
+    .string()
+    .max(35)
+    .regex(/^[a-zA-Z0-9]*$/, "Only alphanumeric characters allowed")
+    .min(2, "First name is required"),
+  lastName: z
+    .string()
+    .max(35)
+    .regex(/^[a-zA-Z0-9]*$/, "Only alphanumeric characters allowed")
+    .min(2, "Last name is required"),
+  phone: z
+    .string()
+    .max(15)
+    .regex(/^[0-9+()]*$/, "Only numbers and +,()")
+    .min(1, "Phone number is required"),
   email: z.string().email("Invalid email address"),
-  question: z.string().min(1, "Question is required"),
+  question: z
+    .string()
+    .min(10, "Question is too short")
+    .max(1000, "Question is too long"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
