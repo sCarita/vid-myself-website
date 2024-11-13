@@ -22,17 +22,18 @@ const Button = ({
   variant = "primary",
   isDisabled = false,
 }: Props) => {
-  return (
+  const buttonElement = (
     <button
       disabled={isDisabled}
       className={`${Variants[variant]} px-4 py-2 rounded-full font-bold ${
         isDisabled ? "opacity-50" : ""
       } ${customClass}`}
     >
-      {href ? <Link href={href}>{title}</Link> : title}
+      {title}
       {sufix}
     </button>
   );
+  return href ? <Link href={href}>{buttonElement}</Link> : buttonElement;
 };
 
 export default Button;
