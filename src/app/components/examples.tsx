@@ -7,7 +7,10 @@ const Examples = () => {
     (_, index) => `/images/example${index + 1}.png`
   );
   return (
-    <Section className="flex flex-col py-20 gap-6 overflow-hidden">
+    <Section
+      id="examples"
+      className="flex flex-col py-20 gap-6 overflow-hidden"
+    >
       <div className="flex flex-col md:flex-row gap-6">
         <div className="flex flex-row flex-wrap gap-4 md:gap-0 md:flex-col bg-dark rounded-[32px] p-8 text-main leading-[50px] md:leading-[70px] text-[40px] md:text-[70px] font-black uppercase">
           <h2 className="block md:hidden">How it looks like?</h2>

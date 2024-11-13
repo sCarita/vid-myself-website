@@ -57,7 +57,7 @@ const PriceCard = ({
 
 const Pricing = () => {
   return (
-    <Section className="container py-20 flex flex-col gap-10">
+    <Section id="pricing" className="container py-20 flex flex-col gap-10">
       <div>
         <h3 className="md:text-[64px] text-[40px] font-bold uppercase">
           Pricing
