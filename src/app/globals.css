@@ -12,3 +12,7 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.input {
+  @apply border-dark border rounded-[32px] py-2 px-4 text-dark text-sm font-bold;
+}

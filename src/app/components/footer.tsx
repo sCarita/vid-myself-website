@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="flex flex-col md:flex-row justify-between items-left md:items-center gap-10 px-4 py-8 sm:px-10 sm:py-16 bg-[#060606] text-white">
       <div className="flex flex-col gap-3">
         <Link href="/">
-          <Image src="/next.svg" alt="logo" width={100} height={100} />
+          <Image src="/logo.png" alt="logo" width={160} height={44} />
         </Link>
         <div className="flex items-center gap-10">
           {links.map((link) => (

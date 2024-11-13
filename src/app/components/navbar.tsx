@@ -7,9 +7,9 @@ const Header = () => {
   return (
     <nav className="flex justify-between items-center px-3 py-3 sm:px-10 sm:py-4">
       <Link href="/">
-        <Image src="/next.svg" alt="logo" width={100} height={100} />
+        <Image src="/logo.png" alt="logo" width={160} height={44} />
       </Link>
-      <div className="hidden sm:flex items-center gap-10">
+      <div className="hidden md:flex items-center gap-10">
         {links.map((link) => (
           <Link
             key={link.name}
