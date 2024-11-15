@@ -18,7 +18,7 @@ const info = [
 ];
 const Details = () => {
   return (
-    <Section className="flex flex-col gap-6 py-20">
+    <Section id="details" className="flex flex-col gap-6 py-20">
       <h3 className="text-dark border border-dark rounded-[32px] p-6 md:p-8 text-[40px] md:text-[64px] font-bold uppercase">
         Our process
       </h3>
