@@ -16,18 +16,19 @@ const ACCEPTED_IMAGE_TYPES = [
 
 const uploadSchema = z.object({
   images: z
-    .instanceof(FileList)
-    .refine((files) => files.length === 3, {
+    .any()
+    .refine((files) => files instanceof FileList, {
       message: "Please upload exactly 3 images",
     })
     .refine(
-      (files) => Array.from(files).every((file) => file.size <= MAX_FILE_SIZE),
+      (files: FileList) =>
+        Array.from(files).every((file) => file.size <= MAX_FILE_SIZE),
       {
         message: "Each file must be less than 10MB",
       }
     )
     .refine(
-      (files) =>
+      (files: FileList) =>
         Array.from(files).every((file) =>
           ACCEPTED_IMAGE_TYPES.includes(file.type)
         ),
