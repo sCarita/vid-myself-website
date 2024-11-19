@@ -28,6 +28,13 @@ const Footer = () => {
         <p className="font-medium text-sm">
           Subscribe to get the lastest news, and AI inspiration.
         </p>
+        <div className="flex rounded-full border-main border-2">
+          <input
+            className="bg-transparent px-4 py-1 text-white"
+            type="email"
+            placeholder="Enter address"
+          />
+        </div>
       </div>
     </footer>
   );

@@ -35,6 +35,7 @@ const Form = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    reset,
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
@@ -47,12 +48,37 @@ const Form = () => {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-  };
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await fetch(
+        "https://n8n.diffusiondynamics.ai/webhook/vidmyself-contactus",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            event_type: "contact_us",
+            first_name: data.firstName,
+            last_name: data.lastName,
+            phone_number: data.phone,
+            email: data.email,
+            your_question: data.question,
+          }),
+        }
+      );
 
-  console.log(errors);
-  console.log(isValid);
+      if (response.ok) {
+        reset();
+        alert("Thank you for your submission!");
+      } else {
+        throw new Error("Failed to submit form");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Failed to submit form. Please try again later.");
+    }
+  };
 
   return (
     <main>
