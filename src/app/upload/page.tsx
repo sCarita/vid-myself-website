@@ -186,33 +186,37 @@ const Upload = () => {
       formData.append('lastName', data.lastName);
       formData.append('email', data.email);
       formData.append('plan', data.plan);
-
+      
       const response = await fetch(`${process.env.NEXT_PUBLIC_N8N_ENDPOINT}/webhook/vidmyself-events`, {
         method: 'POST',
         body: formData,
+        headers: {
+          'Accept': 'application/json',
+        },
+        mode: 'cors',
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("Error response:", errorText);
-        throw new Error(`Failed to submit order: ${response.status}`);
+        console.error("Error response text:", errorText);
+        throw new Error(`Failed to submit order: ${response.status} - ${errorText}`);
       }
 
-      const result = await response.json();
-      console.log("Response:", result);
-
-      // If we get a Stripe URL, redirect directly
+      const responseText = await response.text();
+      const result = JSON.parse(responseText);
+      
+      // Handle successful response (e.g., redirect to Stripe)
       if (result.stripeUrl) {
-        // Redirect the user to Stripe Checkout
         window.location.href = result.stripeUrl;
-        return;
-      } else {
-        throw new Error('No payment URL received');
       }
       
     } catch (error) {
       console.error('Submission failed:', error);
-      setError(typeof error === 'string' ? error : 'Failed to submit order. Please try again.');
+      setError(
+        error instanceof Error 
+          ? error.message 
+          : 'Failed to submit order. Please try again.'
+      );
     } finally {
       setIsLoading(false);
       setProgress({ current: 0, total: 0, status: '' });
@@ -377,13 +381,7 @@ const Upload = () => {
             <h1 className="text-dark text-[40px] md:text-[64px] font-bold uppercase">
               Details
             </h1>
-            <form 
-              onSubmit={async (e) => {
-                e.preventDefault();
-                await detailsForm.handleSubmit(onDetailsSubmit)(e);
-              }} 
-              className="flex flex-col gap-6"
-            >
+            <div className="flex flex-col gap-6">
               <div className="space-y-4">
                 <h2 className="text-dark text-[20px] md:text-[25px] font-bold uppercase">
                   User Information
@@ -439,7 +437,7 @@ const Upload = () => {
 
               <div className="flex justify-center mt-4">
                 <Button
-                  type="submit"
+                  onClick={() => detailsForm.handleSubmit(onDetailsSubmit)()}
                   title={isLoading ? "Processing..." : "Checkout"}
                   customClass="md:w-fit w-full"
                   isDisabled={isLoading}
@@ -455,7 +453,7 @@ const Upload = () => {
                   </div>
                 </div>
               )}
-            </form>
+            </div>
           </>
         )}
       </Section>
