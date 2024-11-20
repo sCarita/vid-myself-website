@@ -7,6 +7,7 @@ type Props = {
   sufix?: React.ReactNode;
   href?: string;
   isDisabled?: boolean;
+  onClick?: () => void;
 };
 
 const Variants = {
@@ -21,10 +22,12 @@ const Button = ({
   href,
   variant = "primary",
   isDisabled = false,
+  onClick,
 }: Props) => {
   const buttonElement = (
     <button
       disabled={isDisabled}
+      onClick={onClick}
       className={`${Variants[variant]} px-4 py-2 rounded-full font-bold ${
         isDisabled ? "opacity-50" : ""
       } ${customClass}`}
