@@ -8,6 +8,7 @@ type Props = {
   href?: string;
   isDisabled?: boolean;
   onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
 };
 
 const Variants = {
@@ -23,6 +24,7 @@ const Button = ({
   variant = "primary",
   isDisabled = false,
   onClick,
+  type,
 }: Props) => {
   const buttonElement = (
     <button

@@ -132,7 +132,7 @@ const Footer = () => {
           </div>
           <Button
             type="submit"
-            disabled={!isDirty || !isValid || isSubmitting}
+            isDisabled={!isDirty || !isValid || isSubmitting}
             title={isSubmitting ? "Subscribing..." : "Subscribe"}
             customClass="whitespace-nowrap"
           />
