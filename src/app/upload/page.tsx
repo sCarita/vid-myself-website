@@ -133,28 +133,20 @@ const Upload = () => {
       // Compress and zip files
       const zipFile = await createZipFile(Array.from(data.images));
 
-      setProgress(prev => ({ ...prev, status: 'Converting and uploading...' }));
+      setProgress(prev => ({ ...prev, status: 'Uploading...' }));
       
-      // Convert zip to base64
-      const base64Zip = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64String = reader.result as string;
-          resolve(base64String.split(',')[1]); // Remove data URL prefix
-        };
-        reader.readAsDataURL(zipFile);
-      });
+      // Create form data
+      const formData = new FormData();
+      formData.append('event_type', 'purchase_attempt');
+      formData.append('photos', zipFile, 'photos.zip'); // Changed key to 'photos'
 
       // Send to endpoint
-      const response = await fetch('https://n8n.diffusiondynamics.ai/webhook/vidmyself-events', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_N8N_ENDPOINT}/webhook/vidmyself-events`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
-        body: JSON.stringify({
-          event_type: 'purchase_attempt',
-          photos_data: base64Zip,
-        }),
+        body: formData,
       });
 
       if (!response.ok) {
