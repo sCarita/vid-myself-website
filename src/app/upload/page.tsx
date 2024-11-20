@@ -66,6 +66,14 @@ const detailsSchema = z.object({
 type UploadSchema = z.infer<typeof uploadSchema>;
 type DetailsSchema = z.infer<typeof detailsSchema>;
 
+// Add this type guard function at the top level of your file
+function isFileList(value: unknown): value is FileList {
+  return value !== null && 
+         typeof value === 'object' && 
+         'length' in value && 
+         'item' in value;
+}
+
 const Upload = () => {
   const [currentStep, setCurrentStep] = useState<1 | 2>(1);
   const [zipFile, setZipFile] = useState<Blob | null>(null);
@@ -81,7 +89,7 @@ const Upload = () => {
   const [isDragging, setIsDragging] = useState(false);
   const selectedFiles = uploadForm.watch("images");
   const [previews, setPreviews] = useState<string[]>([]);
-  const fileCount = selectedFiles instanceof FileList ? selectedFiles.length : 0;
+  const fileCount = isFileList(selectedFiles) ? selectedFiles.length : 0;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<{
@@ -92,7 +100,7 @@ const Upload = () => {
 
   // Update previews when files change
   useEffect(() => {
-    if (selectedFiles && selectedFiles instanceof FileList) {
+    if (selectedFiles && isFileList(selectedFiles)) {
       const urls = Array.from(selectedFiles).map(file => URL.createObjectURL(file));
       setPreviews(urls);
       
@@ -142,7 +150,7 @@ const Upload = () => {
 
   const onUploadSubmit = async (data: UploadSchema) => {
     try {
-      if (!(data.images instanceof FileList)) return;
+      if (!isFileList(data.images)) return;
       setIsLoading(true);
       setError(null);
 
@@ -181,17 +189,26 @@ const Upload = () => {
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_N8N_ENDPOINT}/webhook/vidmyself-events`, {
         method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-        },
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Failed to submit order');
+        const errorText = await response.text();
+        console.error("Error response:", errorText);
+        throw new Error(`Failed to submit order: ${response.status}`);
       }
 
-      console.log('Order submitted successfully!');
+      const result = await response.json();
+      console.log("Response:", result);
+
+      // If we get a Stripe URL, redirect directly
+      if (result.stripeUrl) {
+        // Redirect the user to Stripe Checkout
+        window.location.href = result.stripeUrl;
+        return;
+      } else {
+        throw new Error('No payment URL received');
+      }
       
     } catch (error) {
       console.error('Submission failed:', error);
@@ -360,7 +377,13 @@ const Upload = () => {
             <h1 className="text-dark text-[40px] md:text-[64px] font-bold uppercase">
               Details
             </h1>
-            <form onSubmit={detailsForm.handleSubmit(onDetailsSubmit)} className="flex flex-col gap-6">
+            <form 
+              onSubmit={async (e) => {
+                e.preventDefault();
+                await detailsForm.handleSubmit(onDetailsSubmit)(e);
+              }} 
+              className="flex flex-col gap-6"
+            >
               <div className="space-y-4">
                 <h2 className="text-dark text-[20px] md:text-[25px] font-bold uppercase">
                   User Information
