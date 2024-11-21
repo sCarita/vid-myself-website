@@ -82,6 +82,9 @@ const Footer = () => {
               </Link>
             ))}
           </div>
+          <div>
+            <p className="text-xs">@ 2024 VidMySelf. All rights reserved</p>
+          </div>
         </div>
         <div className="flex flex-col gap-3 md:min-w-[400px]">
           <h3 className="text-main uppercase font-bold text-xl">
