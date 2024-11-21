@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { StepProvider } from "./context/StepContext";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar";
@@ -21,12 +22,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased font-inter min-h-screen flex flex-col`}>
-        <Navbar />
-        <div className="flex-grow">
-          {children}
-        </div>
-        <Footer />
+      <body
+        className={`${inter.variable} antialiased font-inter min-h-screen flex flex-col`}
+      >
+        <StepProvider>
+          <Navbar />
+          <div className="flex-grow">{children}</div>
+          <Footer />
+        </StepProvider>
       </body>
     </html>
   );

@@ -17,6 +17,16 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.main-container {
+  @apply w-full max-w-[1440px] mx-auto px-4 md:px-8 lg:px-16;
+}
+.main-container-sm {
+  @apply w-full max-w-[800px] mx-auto;
+}
+.main-container-md {
+  @apply w-full max-w-[900px] mx-auto;
+}
+
 .input {
   @apply border-dark border rounded-[32px] py-2 px-4 text-dark text-sm font-bold;
 }
