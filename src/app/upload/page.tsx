@@ -5,9 +5,10 @@ import Button from "../components/button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import imageCompression from "browser-image-compression";
 import JSZip from "jszip";
+import { useStep } from "../context/StepContext";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
 const ACCEPTED_IMAGE_TYPES = [
@@ -71,7 +72,7 @@ function isFileList(value: unknown): value is FileList {
 }
 
 const Upload = () => {
-  const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+  const { currentStep, setCurrentStep } = useStep();
   const [zipFile, setZipFile] = useState<Blob | null>(null);
 
   const uploadForm = useForm<UploadSchema>({
@@ -93,6 +94,8 @@ const Upload = () => {
     total: number;
     status: string;
   }>({ current: 0, total: 0, status: "" });
+
+  useEffect(() => {}, [currentStep]);
 
   // Update previews when files change
   useEffect(() => {
@@ -466,6 +469,7 @@ const Upload = () => {
                         {...detailsForm.register("plan")}
                         value="standard"
                         className="mr-2"
+                        required
                       />
                       Standard: 48-hour Delivery
                     </label>
@@ -475,6 +479,7 @@ const Upload = () => {
                         {...detailsForm.register("plan")}
                         value="express"
                         className="mr-2"
+                        required
                       />
                       Express: 24-hour Delivery
                     </label>
