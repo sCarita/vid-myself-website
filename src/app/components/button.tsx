@@ -8,7 +8,7 @@ type Props = {
   href?: string;
   isDisabled?: boolean;
   onClick?: () => void;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
 };
 
 const Variants = {
@@ -30,7 +30,9 @@ const Button = ({
     <button
       disabled={isDisabled}
       onClick={onClick}
-      className={`${Variants[variant]} px-4 py-2 rounded-full font-bold ${
+      className={`${
+        Variants[variant]
+      } px-4 py-3 rounded-full leading-none font-bold ${
         isDisabled ? "opacity-50" : ""
       } ${customClass}`}
     >
