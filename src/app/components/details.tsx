@@ -13,7 +13,7 @@ const info = [
   },
   {
     title: "Fast & flexible delivery",
-    description: "standard delivery in 48 houts, or express in 24-hours.",
+    description: "standard delivery in 48 hours, or express in 24-hours.",
   },
 ];
 const Details = () => {
