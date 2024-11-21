@@ -376,7 +376,7 @@ const Upload = () => {
                   <Button
                     type="submit"
                     title={isLoading ? "Processing..." : "Next page"}
-                    customClass={`md:w-fit w-full ${
+                    customClass={`flex gap-2 items-center md:w-fit w-full ${
                       !selectedFiles ||
                       fileCount < 10 ||
                       fileCount > 30 ||
@@ -389,6 +389,22 @@ const Upload = () => {
                       fileCount < 10 ||
                       fileCount > 30 ||
                       isLoading
+                    }
+                    sufix={
+                      <svg
+                        width="16"
+                        height="15"
+                        viewBox="0 0 16 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M8.293 0.959779C8.48053 0.772308 8.73484 0.666992 9 0.666992C9.26516 0.666992 9.51947 0.772308 9.707 0.959779L15.707 6.95978C15.8945 7.14731 15.9998 7.40162 15.9998 7.66678C15.9998 7.93194 15.8945 8.18625 15.707 8.37378L9.707 14.3738C9.5184 14.5559 9.2658 14.6567 9.0036 14.6545C8.7414 14.6522 8.49059 14.547 8.30518 14.3616C8.11977 14.1762 8.0146 13.9254 8.01233 13.6632C8.01005 13.401 8.11084 13.1484 8.293 12.9598L12.586 8.66678H1C0.734784 8.66678 0.48043 8.56142 0.292893 8.37389C0.105357 8.18635 0 7.932 0 7.66678C0 7.40156 0.105357 7.14721 0.292893 6.95967C0.48043 6.77214 0.734784 6.66678 1 6.66678H12.586L8.293 2.37378C8.10553 2.18625 8.00021 1.93194 8.00021 1.66678C8.00021 1.40161 8.10553 1.14731 8.293 0.959779Z"
+                          fill="black"
+                        />
+                      </svg>
                     }
                   />
                 </div>
@@ -411,7 +427,7 @@ const Upload = () => {
               <h1 className="text-dark text-[40px] md:text-[64px] font-bold uppercase">
                 Details
               </h1>
-              <div className="flex flex-col gap-6">
+              <form className="flex flex-col gap-6">
                 <div className="space-y-4">
                   <h2 className="text-dark text-[20px] md:text-[25px] font-bold uppercase">
                     User Information
@@ -421,17 +437,21 @@ const Upload = () => {
                       {...detailsForm.register("firstName")}
                       placeholder="First name"
                       className="border rounded-full px-4 py-2"
+                      required
                     />
                     <input
                       {...detailsForm.register("lastName")}
                       placeholder="Last name"
                       className="border rounded-full px-4 py-2"
+                      required
                     />
                   </div>
                   <input
                     {...detailsForm.register("email")}
+                    type="email"
                     placeholder="Email"
                     className="w-full border rounded-full px-4 py-2"
+                    required
                   />
                 </div>
 
@@ -465,6 +485,7 @@ const Upload = () => {
 
                 <div className="flex justify-center mt-4">
                   <Button
+                    type="submit"
                     onClick={() => detailsForm.handleSubmit(onDetailsSubmit)()}
                     title={isLoading ? "Processing..." : "Checkout"}
                     customClass="md:w-fit w-full"
@@ -481,7 +502,7 @@ const Upload = () => {
                     </div>
                   </div>
                 )}
-              </div>
+              </form>
             </>
           )}
         </div>
