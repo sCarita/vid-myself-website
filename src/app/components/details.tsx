@@ -22,7 +22,7 @@ const Details = () => {
       <h3 className="text-dark border border-dark rounded-[32px] p-6 md:p-8 text-[40px] md:text-[64px] font-bold uppercase">
         Our process
       </h3>
-      <div className="flex flex-col px-6">
+      <div className="flex flex-col px-3 md:px-6">
         {info.map((item, index) => (
           <div
             key={index}
