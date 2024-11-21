@@ -13,28 +13,34 @@ const formSchema = z.object({
     .trim()
     .min(2, "First name must be at least 2 characters")
     .max(50, "First name cannot exceed 50 characters")
-    .regex(/^[\p{L}\s'-]+$/u, "Please use only letters, spaces, hyphens, and apostrophes"),
-  
+    .regex(
+      /^[\p{L}\s'-]+$/u,
+      "Please use only letters, spaces, hyphens, and apostrophes"
+    ),
+
   lastName: z
     .string()
     .trim()
     .min(2, "Last name must be at least 2 characters")
     .max(50, "Last name cannot exceed 50 characters")
-    .regex(/^[\p{L}\s'-]+$/u, "Please use only letters, spaces, hyphens, and apostrophes"),
-  
+    .regex(
+      /^[\p{L}\s'-]+$/u,
+      "Please use only letters, spaces, hyphens, and apostrophes"
+    ),
+
   phone: z
     .string()
     .trim()
     .regex(/^\+?[1-9]\d{1,14}$/, "Please enter a valid phone number")
     .min(1, "Phone number is required"),
-  
+
   email: z
     .string()
     .trim()
     .email("Please enter a valid email address")
     .min(5, "Email is required")
     .max(254, "Email is too long"),
-  
+
   question: z
     .string()
     .trim()
@@ -66,34 +72,34 @@ const Form = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_N8N_ENDPOINT}/webhook/vidmyself-events`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          event_type: 'contact_us',
-          first_name: data.firstName,
-          last_name: data.lastName,
-          phone_number: data.phone,
-          email: data.email,
-          your_question: data.question,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_N8N_ENDPOINT}/webhook/vidmyself-events`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            event_type: "contact_us",
+            first_name: data.firstName,
+            last_name: data.lastName,
+            phone_number: data.phone,
+            email: data.email,
+            your_question: data.question,
+          }),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to submit form');
+        throw new Error("Failed to submit form");
       }
 
       setIsSuccess(true);
       reset();
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error("Error submitting form:", error);
     }
   };
-
-  console.log(errors);
-  console.log(isValid);
 
   return (
     <main>
@@ -102,29 +108,30 @@ const Form = () => {
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white rounded-[32px] p-8 max-w-md mx-4 relative flex flex-col items-center gap-4">
               <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
-                <svg 
-                  className="w-8 h-8 text-green-500" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-8 h-8 text-green-500"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M5 13l4 4L19 7" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
                   />
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-center">Thank You!</h3>
               <p className="text-center text-gray-600">
-                We've received your message and will get back to you via email shortly.
+                We've received your message and will get back to you via email
+                shortly.
               </p>
-              <Button 
-                title="Close" 
+              <Button
+                title="Close"
                 onClick={() => {
                   setIsSuccess(false);
-                  router.push('/');
+                  router.push("/");
                 }}
                 customClass="mt-4"
               />

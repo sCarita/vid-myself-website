@@ -23,12 +23,12 @@ type NewsletterFormValues = z.infer<typeof newsletterSchema>;
 const Footer = () => {
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting, isDirty, isValid }
+    formState: { errors, isSubmitting, isDirty, isValid },
   } = useForm<NewsletterFormValues>({
     resolver: zodResolver(newsletterSchema),
     mode: "onTouched",
@@ -39,19 +39,22 @@ const Footer = () => {
 
   const onSubmit = async (data: NewsletterFormValues) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_N8N_ENDPOINT}/webhook/vidmyself-events`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          event_type: 'subscribe_newsletter',
-          email: data.email,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_N8N_ENDPOINT}/webhook/vidmyself-events`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            event_type: "subscribe_newsletter",
+            email: data.email,
+          }),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to subscribe');
+        throw new Error("Failed to subscribe");
       }
 
       setShowModal(true);
@@ -67,26 +70,29 @@ const Footer = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-[32px] p-8 max-w-md mx-4 relative flex flex-col items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
-              <svg 
-                className="w-8 h-8 text-green-500" 
-                fill="none" 
-                stroke="currentColor" 
+              <svg
+                className="w-8 h-8 text-green-500"
+                fill="none"
+                stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M5 13l4 4L19 7" 
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
                 />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold text-center text-gray-900">Welcome Aboard!</h3>
+            <h3 className="text-2xl font-bold text-center text-gray-900">
+              Welcome Aboard!
+            </h3>
             <p className="text-center text-gray-600">
-              Thank you for subscribing to our newsletter. Stay tuned for the latest updates and AI inspiration!
+              Thank you for subscribing to our newsletter. Stay tuned for the
+              latest updates and AI inspiration!
             </p>
-            <Button 
-              title="Close" 
+            <Button
+              title="Close"
               onClick={() => setShowModal(false)}
               customClass="mt-4"
             />
@@ -116,14 +122,19 @@ const Footer = () => {
         <p className="font-medium text-sm">
           Subscribe to get the latest news, and AI inspiration.
         </p>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col sm:flex-row gap-2">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col sm:flex-row gap-2"
+        >
           <div className="flex-1">
-            <input
-              {...register("email")}
-              type="email"
-              placeholder="Enter your email"
-              className="w-full px-4 py-2 rounded bg-white/10 border border-white/20 focus:outline-none focus:border-white/40"
-            />
+            <div className="flex rounded-full border-main border-2">
+              <input
+                {...register("email")}
+                type="email"
+                placeholder="Enter your email"
+                className="w-full px-4 py-2 rounded bg-white/10 border border-white/20 focus:outline-none focus:border-white/40"
+              />
+            </div>
             {errors.email && (
               <p className="text-red-400 text-sm mt-1">
                 {errors.email.message}
@@ -138,7 +149,11 @@ const Footer = () => {
           />
         </form>
         {message && (
-          <p className={`text-sm ${message.includes('wrong') ? 'text-red-400' : 'text-green-400'}`}>
+          <p
+            className={`text-sm ${
+              message.includes("wrong") ? "text-red-400" : "text-green-400"
+            }`}
+          >
             {message}
           </p>
         )}
