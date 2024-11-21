@@ -66,7 +66,7 @@ const Pricing = () => {
           Choose your video delivery
         </p>
       </div>
-      <div className="flex flex-row items-center">
+      <div className="flex flex-col md:flex-row max-md:gap-4 items-center">
         <PriceCard {...pricePlans.standard} theBest={true} />
         <PriceCard {...pricePlans.express} theBest={false} />
       </div>
