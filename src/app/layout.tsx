@@ -21,9 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased font-inter`}>
+      <body className={`${inter.variable} antialiased font-inter min-h-screen flex flex-col`}>
         <Navbar />
-        {children}
+        <div className="flex-grow">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
