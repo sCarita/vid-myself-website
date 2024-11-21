@@ -86,7 +86,7 @@ const Footer = () => {
             <p className="text-xs">@ 2024 VidMySelf. All rights reserved</p>
           </div>
         </div>
-        <div className="flex flex-col gap-3 md:min-w-[400px]">
+        <div className="flex flex-col gap-3 lg:min-w-[400px]">
           <h3 className="text-main uppercase font-bold text-xl">
             Sign up for the newsletter
           </h3>
@@ -95,7 +95,7 @@ const Footer = () => {
           </p>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col sm:flex-row sm:items-center gap-2"
+            className="flex flex-col lg:flex-row lg:items-center gap-2"
           >
             <div className="flex-1">
               <div className="flex justify-between items-center px-4 py-1.5 rounded-full border-main border">
