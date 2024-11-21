@@ -71,7 +71,7 @@ const Footer = () => {
           <Link href="/">
             <Image src="/logo.png" alt="logo" width={160} height={44} />
           </Link>
-          <div className="flex items-center gap-10">
+          <div className="hidden md:flex items-center gap-10">
             {links.map((link) => (
               <Link
                 key={link.name}
