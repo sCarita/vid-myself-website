@@ -28,14 +28,18 @@ const PriceCard = ({
   title,
   price,
   features,
+  customClass,
 }: {
   title: string;
   price: number;
   features: string[];
   theBest: boolean;
+  customClass?: string;
 }) => {
   return (
-    <div className="flex flex-col w-full gap-4 border-dark border-[1px] rounded-[27px] p-5">
+    <div
+      className={`flex flex-col w-full gap-4 border-dark border-[1px] rounded-[27px] p-5 ${customClass}`}
+    >
       <div className="flex flex-col gap-4 mb-10">
         <h4 className="text-dark text-[20px] md:text-[25px] font-bold uppercase">
           {title}
@@ -77,18 +81,24 @@ const PriceCard = ({
 
 const Pricing = () => {
   return (
-    <Section id="pricing" className="container py-20 flex flex-col gap-10">
-      <div>
-        <h3 className="md:text-[64px] text-[40px] font-bold uppercase">
-          Pricing
-        </h3>
-        <p className="text-dark text-[20px] md:text-[25px] font-medium uppercase">
-          Choose your video delivery
-        </p>
-      </div>
-      <div className="flex flex-col md:flex-row max-md:gap-4 items-center">
-        <PriceCard {...pricePlans.standard} theBest={true} />
-        <PriceCard {...pricePlans.express} theBest={false} />
+    <Section id="pricing" className="py-20 ">
+      <div className="main-container-md flex flex-col gap-10">
+        <div>
+          <h3 className="md:text-[64px] text-[40px] font-bold uppercase">
+            Pricing
+          </h3>
+          <p className="text-dark text-[20px] md:text-[25px] font-medium uppercase">
+            Choose your video delivery
+          </p>
+        </div>
+        <div className="flex flex-col md:flex-row max-md:gap-4 items-center">
+          <PriceCard {...pricePlans.standard} theBest={true} />
+          <PriceCard
+            {...pricePlans.express}
+            customClass="md:border-l-0 md:rounded-tl-none md:rounded-bl-none"
+            theBest={false}
+          />
+        </div>
       </div>
     </Section>
   );
